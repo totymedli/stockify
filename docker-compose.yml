@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: development 
+    container_name: stockify-dev-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: "npm run start:dev"
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      target: production 
+    container_name: stockify-prod-container
+    ports:
+      - "8080:3000"
+    environment:
+      - NODE_ENV=production
+    command: "node dist/main.js"
